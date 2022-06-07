@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+  currencybot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: currencybot
+    container_name: currencybot
+    environment:
+      PROFILE: dev
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../currencybot_logs:/app/logs
+networks:
+  default:
+    name: currencybot_network
