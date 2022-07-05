@@ -17,10 +17,6 @@ public class User {
     @Column(nullable = false, unique = true, updatable = false, insertable = false)
     private Long id;
 
-    @ManyToOne (fetch = FetchType.EAGER)
-    @JoinColumn(name = "city_id")
-    private City city;
-
     @Column(name = "chat_id", nullable = false)
     private String chatId;
 

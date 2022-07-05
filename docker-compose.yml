@@ -1,18 +1,76 @@
-version: "3.7"
+version: "3.8"
 
 services:
-  currencybot:
+  currencybot_db:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    image: currencybot_db
+    container_name: currencybot_db
+    restart: always
+    environment:
+      - POSTGRES_USER=currencybotuser
+      - POSTGRES_PASSWORD=currencybotuserpassword
+    volumes: 
+      - currencybot_db:/var/lib/postgresql/data
+      - ../currencybot_logs:/app/logs
+    network_mode: host
+
+  currencybot_app:
     build:
       context: .
       dockerfile: Dockerfile
-    image: currencybot
-    container_name: currencybot
-    environment:
-      PROFILE: dev
-    ports:
-      - "8080:8080"
+    image: currencybot_app
+    container_name: currencybot_app
+    depends_on:
+      - currencybot_db
     volumes:
       - ../currencybot_logs:/app/logs
-networks:
-  default:
-    name: currencybot_network
+    network_mode: host
+
+  prometheus:
+    build:
+      context: ./prometheus
+      dockerfile: Dockerfile
+    image: prometheus
+    container_name: prometheus
+    depends_on:
+      - currencybot_app
+    network_mode: host
+
+  promtail:
+    build:
+      context: ./promtail
+      dockerfile: Dockerfile
+    image: promtail
+    container_name: promtail
+    depends_on:
+      - currencybot_app
+    volumes:
+      - ../currencybot_logs:/currencybot_logs
+    command: -config.file=/etc/promtail/promtail.yml
+    network_mode: host
+
+  loki:
+    build:
+      context: ./loki
+      dockerfile: Dockerfile
+    image: loki
+    container_name: loki
+    depends_on:
+      - promtail
+    command: -config.file=/etc/loki/loki.yml
+    network_mode: host
+
+  grafana:
+    build:
+      context: ./grafana
+      dockerfile: Dockerfile
+    image: grafana
+    container_name: grafana
+    network_mode: host
+
+volumes:
+  currencybot_db:
+    name: currencybot_db
+    driver: local

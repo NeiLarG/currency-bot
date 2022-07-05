@@ -17,6 +17,9 @@ import java.net.PasswordAuthentication;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration {
 
+    @Value("${proxy.enabled}")
+    private Boolean proxyEnabled;
+
     @Value("${proxy.login}")
     private String proxyLogin;
 
@@ -26,25 +29,27 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-        .httpBasic().disable()
-        .csrf().disable()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-        .authorizeRequests()
-        .antMatchers("/**").permitAll();
+                .httpBasic().disable()
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers("/**").permitAll();
         return http.build();
     }
 
     @Bean
     public void authenticateProxy() {
-        System.setProperty("jdk.http.auth.tunneling.disabledSchemes", "");
-        Authenticator.setDefault(new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(proxyLogin,
-                        proxyPassword.toCharArray());
-            }
-        });
+        if (proxyEnabled) {
+            System.setProperty("jdk.http.auth.tunneling.disabledSchemes", "");
+            Authenticator.setDefault(new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(proxyLogin,
+                            proxyPassword.toCharArray());
+                }
+            });
+        }
     }
 
 }

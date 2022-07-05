@@ -1,5 +1,6 @@
 package com.neilarg.currencybot.service;
 
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,18 +17,23 @@ public class CrawlerService {
     @Value("${currency_url}")
     private String currencyUrl;
 
+    @Value("${proxy.enabled}")
+    private Boolean proxyEnabled;
+
     @Value("${proxy.ip}")
     private String proxyIp;
 
     @Value("${proxy.port}")
     private Integer proxyPort;
 
-    public Document loadCityPage(String city) throws Exception {
-        return Jsoup.connect(currencyUrl.concat(city))
+    public Document loadCurrenciesPage(String city) throws Exception {
+        Connection connection = Jsoup.connect(currencyUrl.concat(city))
                 .headers(headers)
-                .proxy(proxyIp, proxyPort)
-                .timeout(60000)
-                .get();
+                .timeout(60000);
+        if (proxyEnabled) {
+            connection.proxy(proxyIp, proxyPort);
+        }
+        return connection.get();
     }
 
 }

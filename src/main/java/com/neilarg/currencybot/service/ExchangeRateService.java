@@ -30,7 +30,7 @@ public class ExchangeRateService {
 
     public void updateExchangeRate(ParsedCurrencyDto dto) {
         Bank bank = bankService.getBank(dto.getBankName());
-        if (bank!= null) {
+        if (bank != null) {
             Currency currency = currencyRepository.findByCode(dto.getCurrencyCode());
             ExchangeRate exchangeRate = getExchangeRate(bank, currency);
             exchangeRate.setUpdateDate(new Date());

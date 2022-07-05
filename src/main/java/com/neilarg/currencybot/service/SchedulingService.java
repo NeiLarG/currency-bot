@@ -31,14 +31,4 @@ public class SchedulingService {
         }
     }
 
-    /*@Scheduled(fixedDelay = 10000)
-    private void test() {
-        try {
-            List<ParsedRegionDto> testList = parsingService.parseRegions();
-            System.out.println("");
-        } catch (Exception e) {
-            log.error("[test error", e);
-        }
-    }*/
-
 }
