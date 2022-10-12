@@ -1,6 +1,15 @@
 # currency-bot
 ## Project description
-`IN PROGRESS`
+1.	The project was created to view the real-time exchange rate of various banks of the Republic of Belarus. There are three types of currencies in this project: `USD/BYN`, `EUR/BYN`, `RUB/BYN`. 
+2.	List of main technologies used in the project:
+https://github.com/rubenlagus/TelegramBots Telegram Bot Java Library – a simple to use library to create Telegram Bots in Java;
+- `Spring Framework` – the most popular java Framework for creating web applications;
+- `Spring Boot` – makes it easy to create stand-alone, production-grade Spring based Applications that you can "just run";
+- `Spring Security` – a powerful and highly customizable authentication and access-control Framework. It is the de-facto standard for securing Spring-based applications;
+- `Hibernate (JPA Repository)` – the most popular ORM for databases;
+- `PostgreSQL` – opensource relational database;
+- `Jsoup` – the most popular HTML parsing library.
+3.	The server part of the project downloads information from the `myfin.by` website every 5 minutes and writes all currency changes to the database. And the user of the telegram bot is provided with information from the database. This is to avoid spamming the website with requests, and reduce the chance of getting banned from the website.
 ## Database schema
 `IN PROGRESS`
 ## Project infrastructure
