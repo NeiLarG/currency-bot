@@ -44,6 +44,6 @@ proxy:
 To run a project with all its infrastructure, docker and docker-compose must be installed on your machine.
 This command build images and start docker containers with services. Argument `--abort-on-container-exit` is necessary so that if any of the containers fall, the running containers will automatically stop.
 ```bash
-$ docker-compose up --build --abort-on-container-exit
+$ docker compose up --build --abort-on-container-exit
 ```
 To stop running services, just press `Ctrl+C`.
