@@ -34,16 +34,16 @@ public class ParsingService {
                 Elements columns = row.selectXpath(".//td");
                 ParsedCurrencyDto usd = new ParsedCurrencyDto(columns.get(0).text(),
                                 "USD",
-                                Double.parseDouble(columns.get(1).text()),
-                                Double.parseDouble(columns.get(2).text()));
+                                Double.parseDouble(columns.get(1).text().equals("-") ? "0" : columns.get(1).text()),
+                                Double.parseDouble(columns.get(2).text().equals("-") ? "0" : columns.get(1).text()));
                 ParsedCurrencyDto eur = new ParsedCurrencyDto(columns.get(0).text(),
                                 "EUR",
-                                Double.parseDouble(columns.get(3).text()),
-                                Double.parseDouble(columns.get(4).text()));
+                                Double.parseDouble(columns.get(3).text().equals("-") ? "0" : columns.get(1).text()),
+                                Double.parseDouble(columns.get(4).text().equals("-") ? "0" : columns.get(1).text()));
                 ParsedCurrencyDto rub = new ParsedCurrencyDto(columns.get(0).text(),
                                 "RUB",
-                                Double.parseDouble(columns.get(5).text()),
-                                Double.parseDouble(columns.get(6).text()));
+                                Double.parseDouble(columns.get(5).text().equals("-") ? "0" : columns.get(1).text()),
+                                 Double.parseDouble(columns.get(6).text().equals("-") ? "0" : columns.get(1).text()));
                 return List.of(usd, eur, rub);
         }
 

@@ -1,5 +1,5 @@
 xpath:
-  currency_row: .//tbody[@id="currency_tbody"]/tr[contains(@class, "tr-tb")]
+  currency_row: .//tbody[@class="sort_body"]/tr[contains(@class, "c-currency-table__main-row")]
 currency_url: https://myfin.by/currency/
 headers: "{\
   'authority': 'myfin.by', \
@@ -24,8 +24,8 @@ proxy:
   login: login
   password: password
 bot:
-  nickname: nickname
-  token: bot_token
+  nickname: DVAAAT_BOT
+  token: 5243615972:AAGbTvriVVVgmWuZS-RdyA2i8yOWSt4TjXo
 spring:
   devtools:
     add-properties: false
@@ -43,7 +43,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,prometheus
+        include: health,prometheus,beans
   prometheus:
     metrics:
       export:

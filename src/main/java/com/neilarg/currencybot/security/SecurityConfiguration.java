@@ -34,7 +34,7 @@ public class SecurityConfiguration {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll();
+                .requestMatchers("/**").permitAll();
         return http.build();
     }
 
